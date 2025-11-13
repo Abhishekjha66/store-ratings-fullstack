@@ -1,0 +1,53 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  address       String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  ownedStores   Store[]   @relation("owner_stores")
+  ratings       Rating[]  @relation("user_ratings")
+}
+
+model Store {
+  id           String    @id @default(uuid())
+  name         String
+  email        String?
+  address      String?
+  ownerId      String?
+  owner        User?     @relation("owner_stores", fields: [ownerId], references: [id])
+  ratings      Rating[]  @relation("store_ratings")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  score      Int
+  userId     String
+  storeId    String
+  user       User     @relation("user_ratings", fields: [userId], references: [id])
+  store      Store    @relation("store_ratings", fields: [storeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, storeId])
+}
+
+enum Role {
+  ADMIN
+  USER
+  STORE_OWNER
+}
+

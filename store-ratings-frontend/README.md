@@ -1,61 +1,85 @@
-# Store Ratings Frontend
+# Store Ratings — Frontend
 
-React + Vite frontend for the NestJS/Prisma Store Ratings backend included in the supplied project archive.
+The frontend for the Store Ratings Platform, built using React and Vite. It provides an interface for users, administrators, and store owners to interact with the platform.
 
-## Requirements
-- Node.js 18.18+ (Node 20 LTS recommended)
-- The NestJS backend running at `http://localhost:3000`
+**Live Application:** https://store-ratings-fullstack-nine.vercel.app
 
-## Setup
+**Backend API:** https://store-ratings-fullstack.onrender.com
 
-1. Open a terminal in this folder (`store-ratings-frontend`).
-2. Install dependencies:
+## Features
 
-   ```bash
-   npm install
-   ```
+- Login and user registration
+- Role-based dashboards
+- Store discovery and browsing
+- Store ratings and reviews
+- Admin user and store management
+- Responsive user interface
+- Integration with the NestJS REST API
 
-3. Create a `.env` file by copying `.env.example` (the default API URL is already correct for local development):
+## Tech Stack
 
-   ```env
-   VITE_API_URL=http://localhost:3000
-   ```
+- React.js
+- Vite
+- JavaScript
+- CSS
+- REST API integration
 
-4. Start the frontend:
+## Project Structure
 
-   ```bash
-   npm run dev
-   ```
-
-5. Open the local URL printed by Vite, normally `http://localhost:5173`.
-
-## Build check
-
-```bash
-
-npm run build
+```text
+store-ratings-frontend/
+├── src/
+│   ├── App.jsx
+│   ├── api.js
+│   ├── main.jsx
+│   └── styles.css
+├── index.html
+├── package.json
+└── README.md
 ```
 
-## Backend API used
+## Run Locally
 
-- `POST /auth/signup`
-- `POST /auth/login`
-- `GET /users` (ADMIN JWT)
-- `DELETE /users/:id` (ADMIN JWT)
-- `GET /stores`
-- `GET /stores/:id`
-- `POST /stores`
-- `GET /ratings`
-- `POST /ratings`
+### 1. Clone the repository
 
-The frontend deliberately uses the existing backend contracts and does not require backend source changes.
+```bash
+git clone https://github.com/Abhishekjha66/store-ratings-fullstack.git
+cd store-ratings-fullstack/store-ratings-frontend
+```
 
-## Important backend limitations
+### 2. Install dependencies
 
-The supplied backend currently does not apply authentication/role guards to store and rating routes. The UI only displays role-appropriate pages; this is not a security boundary. Protect those endpoints in the backend before deploying publicly.
+```bash
+npm install
+```
 
-The current ratings API accepts `userId` in the request body and returns IDs rather than customer names. The frontend sends the signed-in user's ID from the login response and displays user IDs in the admin ratings table.
+### 3. Configure environment
 
-The store-owner page discovers owned stores by checking `ownerId` from `GET /stores/:id`; if no store is assigned to the signed-in owner's ID, it shows an empty state. The current backend has no dedicated store-owner endpoint.
+Create a `.env` file in the frontend directory:
 
-The backend JWT expires after 15 minutes. If a request returns 401, sign in again to obtain a fresh token.
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### 4. Start development server
+
+```bash
+npm run dev
+```
+
+The frontend will be available at the local URL displayed by Vite, typically `http://localhost:5173`.
+
+## Production
+
+The frontend is deployed on Vercel and communicates with the backend deployed on Render.
+
+## Author
+
+**Abhishek Jha**
+
+- GitHub: https://github.com/Abhishekjha66
+- LinkedIn: https://www.linkedin.com/in/abhishekjha66-tech66/
+
+---
+
+*Frontend developed for the Store Ratings Full-Stack Platform.*

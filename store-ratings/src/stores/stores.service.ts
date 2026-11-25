@@ -1,5 +1,12 @@
-import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { Injectable } from '@nestjs/common';
+type StoreWithRatings = {
+  id: string;
+  name: string;
+  email: string | null;
+  address: string | null;
+  ratings: { score: number }[];
+};
 
 @Injectable()
 export class StoresService {
@@ -18,12 +25,12 @@ export class StoresService {
       },
     });
 
-    // Add average rating calculation
-    return stores.map((store) => {
+    return stores.map((store: StoreWithRatings) => {
       const avg =
         store.ratings.length > 0
           ? store.ratings.reduce((a, b) => a + b.score, 0) / store.ratings.length
           : 0;
+
       return {
         id: store.id,
         name: store.name,
@@ -45,7 +52,10 @@ export class StoresService {
 
     const avg =
       store.ratings.length > 0
-        ? store.ratings.reduce((a, b) => a + b.score, 0) / store.ratings.length
+        ? store.ratings.reduce(
+  (total: number, rating: { score: number }) => total + rating.score,
+  0
+) / store.ratings.length
         : 0;
 
     return {

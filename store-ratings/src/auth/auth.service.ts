@@ -13,8 +13,8 @@ export class AuthService {
     if (existing) throw new UnauthorizedException('Email already exists');
 
     // Validations
-    if (dto.name.length < 20 || dto.name.length > 60)
-      throw new UnauthorizedException('Name must be between 20 and 60 characters');
+    if (dto.name.length < 2 || dto.name.length > 60)
+  throw new UnauthorizedException('Name must be between 2 and 60 characters');
     if (dto.password.length < 8 || dto.password.length > 16)
       throw new UnauthorizedException('Password must be between 8 and 16 characters');
     if (!/(?=.*[A-Z])(?=.*[^A-Za-z0-9])/.test(dto.password))
